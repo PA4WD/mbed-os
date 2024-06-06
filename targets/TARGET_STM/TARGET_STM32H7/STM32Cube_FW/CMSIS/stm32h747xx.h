@@ -2962,6 +2962,11 @@ typedef struct
 /** @addtogroup Exported_constants
   * @{
   */
+  
+/** @addtogroup Hardware_Constant_Definition
+  * @{
+  */
+#define LSI_STARTUP_TIME 130U /*!< LSI Maximum startup time in us */
 
   /** @addtogroup Peripheral_Registers_Bits_Definition
   * @{
@@ -3012,6 +3017,12 @@ typedef struct
 #define ADC_ISR_JQOVF_Pos                 (10U)
 #define ADC_ISR_JQOVF_Msk                 (0x1UL << ADC_ISR_JQOVF_Pos)         /*!< 0x00000400 */
 #define ADC_ISR_JQOVF                     ADC_ISR_JQOVF_Msk                    /*!< ADC Injected Context Queue Overflow flag */
+#define ADC_ISR_EOCAL_Pos                 (11U)
+#define ADC_ISR_EOCAL_Msk                 (0x1UL << ADC_ISR_EOCAL_Pos)          /*!< 0x00000800 */
+#define ADC_ISR_EOCAL                     ADC_ISR_EOCAL_Msk                     /*!< ADC End of Calibration flag */
+#define ADC_ISR_LDORDY_Pos                (12U)
+#define ADC_ISR_LDORDY_Msk                (0x1UL << ADC_ISR_LDORDY_Pos)         /*!< 0x00001000 */
+#define ADC_ISR_LDORDY                    ADC_ISR_LDORDY_Msk                    /*!< ADC  Voltage Regulator Ready flag */
 
 /********************  Bit definition for ADC_IER register  ********************/
 #define ADC_IER_ADRDYIE_Pos               (0U)

@@ -5,6 +5,8 @@ add_library(mbed-stm32h7cube-fw INTERFACE)
 
 target_sources(mbed-stm32h7cube-fw
     INTERFACE
+		STM32H7xx_HAL_Driver/Legacy/stm32h7xx_hal_eth.c
+		STM32H7xx_HAL_Driver/Legacy/stm32h7xx_hal_eth_ex.c
         STM32H7xx_HAL_Driver/stm32h7xx_hal.c
         STM32H7xx_HAL_Driver/stm32h7xx_hal_adc.c
         STM32H7xx_HAL_Driver/stm32h7xx_hal_adc_ex.c
@@ -81,6 +83,7 @@ target_sources(mbed-stm32h7cube-fw
         STM32H7xx_HAL_Driver/stm32h7xx_hal_smartcard.c
         STM32H7xx_HAL_Driver/stm32h7xx_hal_smartcard_ex.c
         STM32H7xx_HAL_Driver/stm32h7xx_hal_smbus.c
+		STM32H7xx_HAL_Driver/stm32h7xx_hal_smbus_ex.c
         STM32H7xx_HAL_Driver/stm32h7xx_hal_spdifrx.c
         STM32H7xx_HAL_Driver/stm32h7xx_hal_spi.c
         STM32H7xx_HAL_Driver/stm32h7xx_hal_spi_ex.c
