@@ -202,7 +202,7 @@ void USBCDC::callback_reset()
     /* Called in ISR context */
 
     _change_terminal_connected(false);
-};
+}
 
 void USBCDC::callback_state_change(DeviceState new_state)
 {

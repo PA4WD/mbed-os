@@ -363,7 +363,7 @@ USBMouseKeyboard::USBMouseKeyboard(bool connect_blocking, MOUSE_TYPE mouse_type,
     } else {
         init();
     }
-};
+}
 
 USBMouseKeyboard::USBMouseKeyboard(USBPhy *phy, MOUSE_TYPE mouse_type, uint16_t vendor_id, uint16_t product_id, uint16_t product_release):
     USBHID(phy, 0, 0, vendor_id, product_id, product_release)
@@ -371,7 +371,7 @@ USBMouseKeyboard::USBMouseKeyboard(USBPhy *phy, MOUSE_TYPE mouse_type, uint16_t 
     _lock_status = 0;
     _button = 0;
     _mouse_type = mouse_type;
-};
+}
 
 /**
  * Destroy this object
