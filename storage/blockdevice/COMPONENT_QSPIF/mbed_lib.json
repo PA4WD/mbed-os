@@ -9,6 +9,10 @@
             "help": "(Legacy SFDP 1.0 ONLY) Reset involves a single command (0xF0)",
             "value": false
         },
+		"num-status-register": {
+            "help": "number off status register",
+            "value": 2
+        },
         "QSPI_IO0": "MBED_CONF_DRIVERS_QSPI_IO0",
         "QSPI_IO1": "MBED_CONF_DRIVERS_QSPI_IO1",
         "QSPI_IO2": "MBED_CONF_DRIVERS_QSPI_IO2",
@@ -18,8 +22,7 @@
         "QSPI_POLARITY_MODE": 0,
         "QSPI_FREQ": "40000000",
         "QSPI_MIN_READ_SIZE": "1",
-        "QSPI_MIN_PROG_SIZE": "1",
-        "QSPI_NUM_STATUS_REGISTER":"2"
+        "QSPI_MIN_PROG_SIZE": "1"		
     },
     "target_overrides": {
         "MX25R6435F": {
