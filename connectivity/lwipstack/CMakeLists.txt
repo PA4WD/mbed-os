@@ -85,6 +85,8 @@ target_sources(mbed-lwipstack
         source/LWIPMemoryManager.cpp
         source/LWIPStack.cpp
         source/lwip_tools.cpp
+		
+		lwip/src/apps/sntp/lwip_sntp.c
 )
 
 target_compile_definitions(mbed-lwipstack
