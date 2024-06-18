@@ -329,7 +329,20 @@ int QSPIFBlockDevice::read(void *buffer, bd_addr_t addr, bd_size_t size)
     _mutex.unlock();
 
     return status;
+}
 
+int QSPIFBlockDevice::read_secure(void *buffer, mbed::bd_addr_t addr, mbed::bd_size_t size)
+{
+    int status = QSPIF_BD_ERROR_OK;
+    //tr_debug("Read Inst: 0x%xh", _read_secure_instruction);
+    tr_debug("Read Inst: 0x%xh", 0x48);
+    _mutex.lock();
+    if (QSPI_STATUS_OK != _qspi_send_read_command(0x48, buffer, addr, size)) {
+        tr_error("Read Secure Command failed");
+        status = QSPIF_BD_ERROR_DEVICE_ERROR;
+    }
+    _mutex.unlock();
+    return status;
 }
 
 int QSPIFBlockDevice::program(const void *buffer, bd_addr_t addr, bd_size_t size)

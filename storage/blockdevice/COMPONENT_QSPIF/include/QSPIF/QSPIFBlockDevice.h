@@ -167,6 +167,16 @@ public:
      */
     virtual int read(void *buffer, mbed::bd_addr_t addr, mbed::bd_size_t size);
 
+    /** Read blocks from a block device from secure area (AT25SF128A)
+     *
+     *  @param buffer   Buffer to write blocks to
+     *  @param addr     Address of block to begin reading from
+     *  @param size     Size to read in bytes, must be a multiple of read block size
+     *  @return         QSPIF_BD_ERROR_OK(0) - success
+     *                  QSPIF_BD_ERROR_DEVICE_ERROR - device driver transaction failed
+     */
+    virtual int read_secure(void *buffer, mbed::bd_addr_t addr, mbed::bd_size_t size);
+
     /** Program blocks to a block device
      *
      *  The blocks must have been erased prior to being programmed
