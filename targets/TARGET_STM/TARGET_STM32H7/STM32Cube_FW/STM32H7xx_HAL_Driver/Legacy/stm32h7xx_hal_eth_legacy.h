@@ -29,7 +29,6 @@
 #include "stm32h7xx_hal_def.h"
 
 #ifdef HAL_ETH_LEGACY_MODULE_ENABLED
-
 #if defined(ETH)
 
 /** @addtogroup STM32H7xx_HAL_Driver
@@ -1676,7 +1675,6 @@ uint32_t             HAL_ETH_GetMACWakeUpSource(ETH_HandleTypeDef *heth);
   */
 
 #endif /* ETH */
-
 #endif /* HAL_ETH_LEGACY_MODULE_ENABLED */
 
 #ifdef __cplusplus

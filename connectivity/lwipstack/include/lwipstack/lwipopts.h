@@ -211,8 +211,8 @@
 #define LWIP_ND6_QUEUEING           MBED_CONF_ND6_QUEUEING
 
 // Debug Options
-#define NETIF_DEBUG                 LWIP_DBG_OFF
-#define PBUF_DEBUG                  LWIP_DBG_OFF
+#define NETIF_DEBUG                 LWIP_DBG_ON
+#define PBUF_DEBUG                  LWIP_DBG_ON
 #define API_LIB_DEBUG               LWIP_DBG_OFF
 #define API_MSG_DEBUG               LWIP_DBG_OFF
 #define SOCKETS_DEBUG               LWIP_DBG_OFF

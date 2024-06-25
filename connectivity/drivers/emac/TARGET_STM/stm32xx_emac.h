@@ -152,6 +152,8 @@ public:
     ETH_HandleTypeDef EthHandle;
     osThreadId_t thread; /**< Processing thread */
 
+    EMACMemoryManager *memory_manager; /**< Memory manager */
+
 private:
     bool low_level_init_successful();
     void packet_rx();
@@ -163,8 +165,7 @@ private:
     void disable_interrupts();
 
     mbed_rtos_storage_thread_t thread_cb;
-#if defined (STM32F767xx) || defined (STM32F769xx) || defined (STM32F777xx)\
-    || defined (STM32F779xx)
+#if defined (STM32F767xx) || defined (STM32F769xx) || defined (STM32F777xx) || defined (STM32F779xx)
     mbed_rtos_storage_thread_t rmii_watchdog_thread_cb;
     osThreadId_t rmii_watchdog_thread; /**< Watchdog processing thread */
 #endif
@@ -172,9 +173,10 @@ private:
     rtos::Mutex RXLockMutex;/**< RX critical section mutex */
     emac_link_input_cb_t emac_link_input_cb; /**< Callback for incoming data */
     emac_link_state_change_cb_t emac_link_state_cb; /**< Link state change callback */
-    EMACMemoryManager *memory_manager; /**< Memory manager */
+    //EMACMemoryManager *memory_manager; /**< Memory manager */
 
-    uint32_t phy_status;
+    //uint32_t phy_status;
+    int32_t phy_status;
     int phy_task_handle; /**< Handle for phy task event */
 };
 

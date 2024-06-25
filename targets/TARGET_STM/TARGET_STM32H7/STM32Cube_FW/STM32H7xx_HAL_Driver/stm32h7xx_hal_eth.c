@@ -993,34 +993,40 @@ HAL_StatusTypeDef HAL_ETH_Transmit(ETH_HandleTypeDef *heth, ETH_TxPacketConfigTy
   */
 HAL_StatusTypeDef HAL_ETH_Transmit_IT(ETH_HandleTypeDef *heth, ETH_TxPacketConfigTypeDef *pTxConfig)
 {
+  //printf("1\r\n");
   if (pTxConfig == NULL)
   {
     heth->ErrorCode |= HAL_ETH_ERROR_PARAM;
     return HAL_ERROR;
   }
-
+  //printf("2\r\n");
   if (heth->gState == HAL_ETH_STATE_STARTED)
   {
+    //printf("3\r\n");
     /* Save the packet pointer to release.  */
     heth->TxDescList.CurrentPacketAddress = (uint32_t *)pTxConfig->pData;
-
+    //printf("4\r\n");
     /* Config DMA Tx descriptor by Tx Packet info */
     if (ETH_Prepare_Tx_Descriptors(heth, pTxConfig, 1) != HAL_ETH_ERROR_NONE)
     {
       heth->ErrorCode |= HAL_ETH_ERROR_BUSY;
       return HAL_ERROR;
     }
-
+    //printf("5\r\n");
     /* Ensure completion of descriptor preparation before transmission start */
     __DSB();
-
+    //printf("6\r\n");
     /* Incr current tx desc index */
     INCR_TX_DESC_INDEX(heth->TxDescList.CurTxDesc, 1U);
+    //printf("7\r\n");
 
+    //printf("tx desc %lu\r\n", (uint32_t)(heth->TxDescList.TxDesc[heth->TxDescList.CurTxDesc]));
+    //printf("8\r\n");
     /* Start transmission */
     /* issue a poll command to Tx DMA by writing address of next immediate free descriptor */
     WRITE_REG(heth->Instance->DMACTDTPR, (uint32_t)(heth->TxDescList.TxDesc[heth->TxDescList.CurTxDesc]));
 
+    //printf("9\r\n");
     return HAL_OK;
 
   }
@@ -1039,6 +1045,7 @@ HAL_StatusTypeDef HAL_ETH_Transmit_IT(ETH_HandleTypeDef *heth, ETH_TxPacketConfi
   */
 HAL_StatusTypeDef HAL_ETH_ReadData(ETH_HandleTypeDef *heth, void **pAppBuff)
 {
+  //printf("------------ HAL_ETH_ReadData -----------------\r\n");
   uint32_t descidx;
   ETH_DMADescTypeDef *dmarxdesc;
   uint32_t desccnt = 0U;
@@ -1061,10 +1068,20 @@ HAL_StatusTypeDef HAL_ETH_ReadData(ETH_HandleTypeDef *heth, void **pAppBuff)
   dmarxdesc = (ETH_DMADescTypeDef *)heth->RxDescList.RxDesc[descidx];
   desccntmax = ETH_RX_DESC_CNT - heth->RxDescList.RxBuildDescCnt;
 
+  //printf("descidx %ld\r\n", descidx);
+  //printf("DESC3 OWN wb bit %lu\r\n", READ_BIT(dmarxdesc->DESC3, ETH_DMARXNDESCWBF_OWN) == (uint32_t)RESET);
+  //printf("DESC3 OWN r bit  %lu\r\n", READ_BIT(dmarxdesc->DESC3, ETH_DMARXNDESCRF_OWN) > 0);
+
+  //printf("desccnt %lu\r\n", desccnt);
+  //printf("desccntmax %lu\r\n", desccntmax);
+  //printf("bool %lu\r\n", (desccnt < desccntmax));
+
+  //printf("rxdataready %lu\r\n", rxdataready);
+
   /* Check if descriptor is not owned by DMA */
-  while ((READ_BIT(dmarxdesc->DESC3, ETH_DMARXNDESCWBF_OWN) == (uint32_t)RESET) && (desccnt < desccntmax)
-         && (rxdataready == 0U))
+  while ((READ_BIT(dmarxdesc->DESC3, ETH_DMARXNDESCWBF_OWN) == (uint32_t)RESET) && (desccnt < desccntmax) && (rxdataready == 0U))
   {
+    //printf("DESC3 CTXT wb bit %lu\r\n", READ_BIT(dmarxdesc->DESC3,  ETH_DMARXNDESCWBF_CTXT));
     if (READ_BIT(dmarxdesc->DESC3,  ETH_DMARXNDESCWBF_CTXT)  != (uint32_t)RESET)
     {
       /* Get timestamp high */
@@ -1072,6 +1089,7 @@ HAL_StatusTypeDef HAL_ETH_ReadData(ETH_HandleTypeDef *heth, void **pAppBuff)
       /* Get timestamp low */
       heth->RxDescList.TimeStamp.TimeStampLow  = dmarxdesc->DESC0;
     }
+    //printf("DESC3 FD wb bit %lu\r\n", READ_BIT(dmarxdesc->DESC3,  ETH_DMARXNDESCWBF_FD));
     if ((READ_BIT(dmarxdesc->DESC3, ETH_DMARXNDESCWBF_FD) != (uint32_t)RESET) || (heth->RxDescList.pRxStart != NULL))
     {
       /* Check if first descriptor */
@@ -1177,25 +1195,38 @@ static void ETH_UpdateDescriptor(ETH_HandleTypeDef *heth)
 #endif  /* USE_HAL_ETH_REGISTER_CALLBACKS */
       if (buff == NULL)
       {
+        //printf("buff == null\r\n");
         allocStatus = 0U;
       }
       else
       {
+        //printf("buff %ld\r\n", (uint32_t)buff);
         WRITE_REG(dmarxdesc->BackupAddr0, (uint32_t)buff);
         WRITE_REG(dmarxdesc->DESC0, (uint32_t)buff);
+        //printf("backupAddr0: %ld\r\n", READ_REG(dmarxdesc->BackupAddr0));
+        //printf("DESC0:       %ld\r\n", READ_REG(dmarxdesc->DESC0));
       }
     }
 
     if (allocStatus != 0U)
     {
-
       if (heth->RxDescList.ItMode != 0U)
       {
+        //printf("write DESC3\r\n");
         WRITE_REG(dmarxdesc->DESC3, ETH_DMARXNDESCRF_OWN | ETH_DMARXNDESCRF_BUF1V | ETH_DMARXNDESCRF_IOC);
+
+        //printf("read DESC3 %lu\r\n", READ_REG(dmarxdesc->DESC3));
+
+        //printf("DESC3 OWN   %lu\r\n", READ_BIT(dmarxdesc->DESC3, ETH_DMARXNDESCRF_OWN) > 0);
+        //printf("DESC3 BUF1V %lu\r\n", READ_BIT(dmarxdesc->DESC3, ETH_DMARXNDESCRF_BUF1V) > 0);
+        //printf("DESC3 IOC   %lu\r\n", READ_BIT(dmarxdesc->DESC3, ETH_DMARXNDESCRF_IOC) > 0);
       }
       else
       {
         WRITE_REG(dmarxdesc->DESC3, ETH_DMARXNDESCRF_OWN | ETH_DMARXNDESCRF_BUF1V);
+
+        //printf("DESC3 OWN   %lu\r\n", READ_BIT(dmarxdesc->DESC3, ETH_DMARXNDESCRF_OWN));
+        //printf("DESC3 BUF1V %lu\r\n", READ_BIT(dmarxdesc->DESC3, ETH_DMARXNDESCRF_BUF1V));
       }
 
       /* Increment current rx descriptor index */
@@ -1206,8 +1237,13 @@ static void ETH_UpdateDescriptor(ETH_HandleTypeDef *heth)
     }
   }
 
+  //printf("RxBuildDescCnt %ld\r\n", heth->RxDescList.RxBuildDescCnt);
+  //printf("desccount %ld\r\n", desccount);
+
   if (heth->RxDescList.RxBuildDescCnt != desccount)
   {
+    //printf("set tail pointer %lu\r\n", READ_REG(heth->Instance->DMACRDTPR));
+
     /* Set the tail pointer index */
     tailidx = (descidx + 1U) % ETH_RX_DESC_CNT;
 
@@ -1219,6 +1255,8 @@ static void ETH_UpdateDescriptor(ETH_HandleTypeDef *heth)
 
     heth->RxDescList.RxBuildDescIdx = descidx;
     heth->RxDescList.RxBuildDescCnt = desccount;
+
+    //printf("set tail pointer %lu\r\n", READ_REG(heth->Instance->DMACRDTPR));
   }
 }
 

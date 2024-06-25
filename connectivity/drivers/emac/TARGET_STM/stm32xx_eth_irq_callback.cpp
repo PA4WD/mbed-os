@@ -20,31 +20,31 @@
 #if DEVICE_EMAC
 
 #include "stm32xx_emac.h"
-#define FLAG_RX                 1
+//#define FLAG_RX                 1
 
 /**
  * Override Ethernet Rx Transfer completed callback
  * @param  heth: ETH handle
  * @retval None
  */
-void HAL_ETH_RxCpltCallback(ETH_HandleTypeDef *heth)
-{
-    STM32_EMAC &emac = STM32_EMAC::get_instance();
-    if (emac.thread) {
-        osThreadFlagsSet(emac.thread, FLAG_RX);
-    }
-}
+// void HAL_ETH_RxCpltCallback(ETH_HandleTypeDef *heth)
+// {
+    // STM32_EMAC &emac = STM32_EMAC::get_instance();
+    // if (emac.thread) {
+        // osThreadFlagsSet(emac.thread, FLAG_RX);
+    // }
+// }
 
 /**
  * Override the IRQ Handler
  * @param  None
  * @retval None
  */
-void STM_HAL_ETH_Handler()
-{
-   STM32_EMAC &emac = STM32_EMAC::get_instance();
-   HAL_ETH_IRQHandler(&emac.EthHandle);
-}
+// void STM_HAL_ETH_Handler()
+// {
+   // STM32_EMAC &emac = STM32_EMAC::get_instance();
+   // HAL_ETH_IRQHandler(&emac.EthHandle);
+// }
 
 #endif /* DEVICE_EMAC */
 

@@ -17,6 +17,6 @@
 #ifndef STM32XX_EMAC_CONFIG_H__
 #define STM32XX_EMAC_CONFIG_H__
 
-#define ETH_IP_VERSION_V2
+#define ETH_IP_VERSION_V3
 
 #endif // #define STM32XX_EMAC_CONFIG_H__

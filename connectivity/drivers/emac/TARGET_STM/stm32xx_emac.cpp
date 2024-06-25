@@ -17,6 +17,8 @@
 
 #if DEVICE_EMAC
 
+#ifndef ETH_IP_VERSION_V3
+
 #include <stdlib.h>
 
 #include "cmsis_os.h"
@@ -1085,4 +1087,5 @@ void HAL_ETH_MACErrorCallback(ETH_HandleTypeDef *heth)
 }
 #endif // ETH_IP_VERSION_V2
 
+#endif //ETH_IP_VERSION_V3
 #endif /* DEVICE_EMAC */

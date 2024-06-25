@@ -2,46 +2,27 @@
   ******************************************************************************
   * @file    lan8742.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    08-March-2017
   * @brief   This file contains all the functions prototypes for the
   *          lan8742.c PHY driver.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT(c) 2017 STMicroelectronics</center></h2>
+  * Copyright (c) 2017 STMicroelectronics.
+  * All rights reserved.
   *
-  * Redistribution and use in source and binary forms, with or without modification,
-  * are permitted provided that the following conditions are met:
-  *   1. Redistributions of source code must retain the above copyright notice,
-  *      this list of conditions and the following disclaimer.
-  *   2. Redistributions in binary form must reproduce the above copyright notice,
-  *      this list of conditions and the following disclaimer in the documentation
-  *      and/or other materials provided with the distribution.
-  *   3. Neither the name of STMicroelectronics nor the names of its contributors
-  *      may be used to endorse or promote products derived from this software
-  *      without specific prior written permission.
-  *
-  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __LAN8742_H
-#define __LAN8742_H
+#ifndef LAN8742_H
+#define LAN8742_H
 
 #ifdef __cplusplus
-extern "C" {
+ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -54,14 +35,14 @@ extern "C" {
 /** @addtogroup Component
   * @{
   */
-
+    
 /** @defgroup LAN8742
   * @{
   */
 /* Exported constants --------------------------------------------------------*/
 /** @defgroup LAN8742_Exported_Constants LAN8742 Exported Constants
   * @{
-  */
+  */ 
 
 /** @defgroup LAN8742_Registers_Mapping LAN8742 Registers Mapping
   * @{
@@ -348,7 +329,7 @@ extern "C" {
 /**
   * @}
   */
-
+    
 /** @defgroup LAN8742_Status LAN8742 Status
   * @{
   */
@@ -388,34 +369,36 @@ extern "C" {
   * @}
   */
 
-/* Exported types ------------------------------------------------------------*/
+/* Exported types ------------------------------------------------------------*/ 
 /** @defgroup LAN8742_Exported_Types LAN8742 Exported Types
   * @{
   */
-typedef int32_t (*lan8742_Init_Func)(void);
-typedef int32_t (*lan8742_DeInit_Func)(void);
-typedef int32_t (*lan8742_ReadReg_Func)(uint32_t, uint32_t, uint32_t *);
-typedef int32_t (*lan8742_WriteReg_Func)(uint32_t, uint32_t, uint32_t);
-typedef int32_t (*lan8742_GetTick_Func)(void);
+typedef int32_t  (*lan8742_Init_Func) (void); 
+typedef int32_t  (*lan8742_DeInit_Func) (void);
+typedef int32_t  (*lan8742_ReadReg_Func)   (uint32_t, uint32_t, uint32_t *);
+typedef int32_t  (*lan8742_WriteReg_Func)  (uint32_t, uint32_t, uint32_t);
+typedef int32_t  (*lan8742_GetTick_Func)  (void);
 
-typedef struct {
-    lan8742_Init_Func      Init;
-    lan8742_DeInit_Func    DeInit;
-    lan8742_WriteReg_Func  WriteReg;
-    lan8742_ReadReg_Func   ReadReg;
-    lan8742_GetTick_Func   GetTick;
-} lan8742_IOCtx_t;
+typedef struct 
+{
+  lan8742_Init_Func      Init; 
+  lan8742_DeInit_Func    DeInit;
+  lan8742_WriteReg_Func  WriteReg;
+  lan8742_ReadReg_Func   ReadReg;
+  lan8742_GetTick_Func   GetTick;
+} lan8742_IOCtx_t;  
 
-
-typedef struct {
-    uint32_t            DevAddr;
-    uint32_t            Is_Initialized;
-    lan8742_IOCtx_t     IO;
-    void               *pData;
-} lan8742_Object_t;
+  
+typedef struct 
+{
+  uint32_t            DevAddr;
+  uint32_t            Is_Initialized;
+  lan8742_IOCtx_t     IO;
+  void               *pData;
+}lan8742_Object_t;
 /**
   * @}
-  */
+  */ 
 
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions --------------------------------------------------------*/
@@ -438,13 +421,17 @@ int32_t LAN8742_ClearIT(lan8742_Object_t *pObj, uint32_t Interrupt);
 int32_t LAN8742_GetITStatus(lan8742_Object_t *pObj, uint32_t Interrupt);
 /**
   * @}
-  */
+  */ 
 
 #ifdef __cplusplus
 }
 #endif
-#endif /* __LAN8742_H */
+#endif /* LAN8742_H */
 
+
+/**
+  * @}
+  */ 
 
 /**
   * @}
@@ -452,13 +439,8 @@ int32_t LAN8742_GetITStatus(lan8742_Object_t *pObj, uint32_t Interrupt);
 
 /**
   * @}
-  */
+  */ 
 
 /**
   * @}
-  */
-
-/**
-  * @}
-  */
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+  */       
