@@ -381,8 +381,8 @@ bool STM32_EMAC::low_level_init_successful()
     EthHandle.Init.TxDesc = DMATxDscrTab;
     EthHandle.Init.RxBuffLen = 1524;
 
-    tr_debug("MAC Addr %02x:%02x:%02x:%02x:%02x:%02x", MACAddr[0], MACAddr[1], MACAddr[2], MACAddr[3], MACAddr[4], MACAddr[5]);
-    tr_info("ETH buffers : %u Rx %u Tx", ETH_RX_DESC_CNT, ETH_TX_DESC_CNT);
+    tr_debug("MAC Addr %02x:%02x:%02x:%02x:%02x:%02x", MACAddr[0], MACAddr[1], MACAddr[2], MACAddr[3], MACAddr[4], MACAddr[5]);    
+    tr_info("ETH buffers - Rx:%u size:%u - Tx:%u size:%u - Rx buff size:%u ", ETH_RX_DESC_CNT, sizeof(DMARxDscrTab), ETH_TX_DESC_CNT, sizeof(DMATxDscrTab), sizeof(Rx_Buff));
 
     if (HAL_ETH_Init(&EthHandle) != HAL_OK) {
         return false;
@@ -499,7 +499,6 @@ error:
 {
     bool success = false;
     uint32_t i = 0;
-    uint32_t frameLength = 0;
     struct pbuf *q;
     ETH_BufferTypeDef Txbuffer[ETH_TX_DESC_CNT];
     HAL_StatusTypeDef status;
@@ -519,7 +518,6 @@ error:
 
         Txbuffer[i].buffer = (uint8_t *)q->payload;
         Txbuffer[i].len = q->len;
-        frameLength += q->len;
 
         if (i > 0) {
             Txbuffer[i - 1].next = &Txbuffer[i];
@@ -532,7 +530,7 @@ error:
         i++;
     }
 
-    TxConfig.Length = frameLength;
+    TxConfig.Length = p->tot_len;
     TxConfig.TxBuffer = Txbuffer;
 
     status = HAL_ETH_Transmit(&EthHandle, &TxConfig, 50);
