@@ -334,10 +334,11 @@ int QSPIFBlockDevice::read(void *buffer, bd_addr_t addr, bd_size_t size)
 int QSPIFBlockDevice::read_secure(void *buffer, mbed::bd_addr_t addr, mbed::bd_size_t size)
 {
     int status = QSPIF_BD_ERROR_OK;
-    //tr_debug("Read Inst: 0x%xh", _read_secure_instruction);
     tr_debug("Read Inst: 0x%xh", 0x48);
     _mutex.lock();
-    if (QSPI_STATUS_OK != _qspi_send_read_command(0x48, buffer, addr, size)) {
+    size_t len = size;
+    if (QSPI_STATUS_OK != _qspi.read(0x48, -1, (unsigned int)addr, (char *)buffer, &len))
+    {
         tr_error("Read Secure Command failed");
         status = QSPIF_BD_ERROR_DEVICE_ERROR;
     }
@@ -1340,8 +1341,7 @@ qspi_status_t QSPIFBlockDevice::_qspi_update_4byte_ext_addr_reg(bd_addr_t addr)
     return status;
 }
 
-qspi_status_t QSPIFBlockDevice::_qspi_send_read_command(qspi_inst_t read_inst, void *buffer,
-                                                        bd_addr_t addr, bd_size_t size)
+qspi_status_t QSPIFBlockDevice::_qspi_send_read_command(qspi_inst_t read_inst, void *buffer, bd_addr_t addr, bd_size_t size)
 {
     tr_debug("Inst: 0x%xh, addr: %llu, size: %llu", read_inst, addr, size);
 
