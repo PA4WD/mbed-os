@@ -1620,8 +1620,10 @@ const uint8_t *USBDevice::device_desc()
     uint8_t device_descriptor_temp[] = {
         DEVICE_DESCRIPTOR_LENGTH,       /* bLength */
         DEVICE_DESCRIPTOR,              /* bDescriptorType */
-        LSB(USB_VERSION_2_0),           /* bcdUSB (LSB) */
-        MSB(USB_VERSION_2_0),           /* bcdUSB (MSB) */
+        //LSB(USB_VERSION_2_0),           /* bcdUSB (LSB) */
+        //MSB(USB_VERSION_2_0),           /* bcdUSB (MSB) */
+		LSB(USB_VERSION_1_1),           /* bcdUSB (LSB) */
+        MSB(USB_VERSION_1_1),           /* bcdUSB (MSB) */
         0x00,                           /* bDeviceClass */
         0x00,                           /* bDeviceSubClass */
         0x00,                           /* bDeviceprotocol */
