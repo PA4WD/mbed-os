@@ -25,7 +25,6 @@
 void lwip_seed_random(void)
 {
     randLIB_seed_random();
-
 }
 
 void lwip_add_random_seed(uint64_t seed)
