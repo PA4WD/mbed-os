@@ -446,10 +446,10 @@ void STM32_EMAC::phy_task()
     if (emac_link_state_cb) {
         if (is_up && !was_up) {
             emac_link_state_cb(true);
-            tr_info("emac_link_state_cb set to true");
+            //tr_info("emac_link_state_cb set to true");
         } else if (!is_up && was_up) {
             emac_link_state_cb(false);
-            tr_info("emac_link_state_cb set to false");
+            //tr_info("emac_link_state_cb set to false");
         }
     }
 
