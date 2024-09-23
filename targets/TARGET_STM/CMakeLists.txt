@@ -1,22 +1,7 @@
 # Copyright (c) 2020-2021 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-add_subdirectory(TARGET_STM32F0 EXCLUDE_FROM_ALL)
-add_subdirectory(TARGET_STM32F1 EXCLUDE_FROM_ALL)
-add_subdirectory(TARGET_STM32F2 EXCLUDE_FROM_ALL)
-add_subdirectory(TARGET_STM32F3 EXCLUDE_FROM_ALL)
-add_subdirectory(TARGET_STM32F4 EXCLUDE_FROM_ALL)
-add_subdirectory(TARGET_STM32F7 EXCLUDE_FROM_ALL)
-add_subdirectory(TARGET_STM32G0 EXCLUDE_FROM_ALL)
-add_subdirectory(TARGET_STM32G4 EXCLUDE_FROM_ALL)
 add_subdirectory(TARGET_STM32H7 EXCLUDE_FROM_ALL)
-add_subdirectory(TARGET_STM32L0 EXCLUDE_FROM_ALL)
-add_subdirectory(TARGET_STM32L1 EXCLUDE_FROM_ALL)
-add_subdirectory(TARGET_STM32L4 EXCLUDE_FROM_ALL)
-add_subdirectory(TARGET_STM32L5 EXCLUDE_FROM_ALL)
-add_subdirectory(TARGET_STM32U5 EXCLUDE_FROM_ALL)
-add_subdirectory(TARGET_STM32WB EXCLUDE_FROM_ALL)
-add_subdirectory(TARGET_STM32WL EXCLUDE_FROM_ALL)
 
 add_library(mbed-stm INTERFACE)
 
