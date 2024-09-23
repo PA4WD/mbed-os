@@ -9,12 +9,6 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
     endif()
 endif()
 
-# TODO CMake: Perhaps move this/these file(s) into connectivity/drivers/cellular
-target_sources(mbed-cellular
-    INTERFACE
-        source/CellularNonIPSocket.cpp
-)
-
 target_include_directories(mbed-netsocket
     INTERFACE
         .
@@ -43,7 +37,6 @@ target_sources(mbed-netsocket
         source/TLSSocket.cpp
         source/TLSSocketWrapper.cpp
         source/UDPSocket.cpp
-        source/WiFiAccessPoint.cpp
         source/nsapi_dns.cpp
         source/nsapi_ppp.cpp
 )
@@ -69,7 +62,5 @@ endif()
 
 target_link_libraries(mbed-netsocket
     INTERFACE
-        mbed-wifi
-        mbed-cellular
         mbed-nanostack-libservice
 )

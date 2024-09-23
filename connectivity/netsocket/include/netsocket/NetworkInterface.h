@@ -33,9 +33,6 @@
 // Predeclared classes
 class NetworkStack;
 class EthInterface;
-class WiFiInterface;
-class MeshInterface;
-class CellularInterface;
 class EMACInterface;
 class PPPInterface;
 
@@ -53,7 +50,7 @@ public:
      * target.network-default-interface-type or other overrides.
      *
      * The type of the interface returned can be tested by calling ethInterface(),
-     * wifiInterface(), meshInterface(), cellularInterface(), emacInterface() and checking
+     *  emacInterface() and checking
      * for NULL pointers.
      *
      * The default behavior is to return the default interface for the
@@ -445,22 +442,6 @@ public:
         return nullptr;
     }
 
-    /** Return pointer to a WiFiInterface.
-     * @return Pointer to requested interface type or NULL if this class doesn't implement the interface.
-     */
-    virtual WiFiInterface *wifiInterface()
-    {
-        return nullptr;
-    }
-
-    /** Return pointer to a MeshInterface.
-     * @return Pointer to requested interface type or NULL if this class doesn't implement the interface.
-     */
-    virtual MeshInterface *meshInterface()
-    {
-        return nullptr;
-    }
-
     /** Return pointer to an EMACInterface.
      * @return Pointer to requested interface type or NULL if this class doesn't implement the interface.
      */
@@ -469,13 +450,6 @@ public:
         return nullptr;
     }
 
-    /** Return pointer to a CellularInterface.
-     * @return Pointer to requested interface type or NULL if this class doesn't implement the interface.
-     */
-    virtual CellularInterface *cellularInterface()
-    {
-        return nullptr;
-    }
 
 #if !defined(DOXYGEN_ONLY)
 
