@@ -3,8 +3,6 @@
 
 add_subdirectory(TARGET_STM32H747xI_CM4 EXCLUDE_FROM_ALL)
 add_subdirectory(TARGET_STM32H747xI_CM7 EXCLUDE_FROM_ALL)
-add_subdirectory(TARGET_DISCO_H747I EXCLUDE_FROM_ALL)
-add_subdirectory(TARGET_PORTENTA_H7 EXCLUDE_FROM_ALL)
 
 add_library(mbed-stm32h747xi INTERFACE)
 

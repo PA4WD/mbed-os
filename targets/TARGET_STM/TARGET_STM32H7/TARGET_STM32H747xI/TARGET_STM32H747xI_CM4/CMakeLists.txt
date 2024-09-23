@@ -2,11 +2,8 @@
 # SPDX-License-Identifier: Apache-2.0
 
 if(${MBED_TOOLCHAIN} STREQUAL "GCC_ARM")
-    set(STARTUP_FILE TOOLCHAIN_GCC_ARM/startup_stm32h747xx.S)
-    set(LINKER_FILE TOOLCHAIN_GCC_ARM/stm32h747xI_CM4.ld)
-elseif(${MBED_TOOLCHAIN} STREQUAL "ARM")
-    set(STARTUP_FILE TOOLCHAIN_ARM/startup_stm32h747xx.S)
-    set(LINKER_FILE TOOLCHAIN_ARM/stm32h747xI_CM4.sct)
+    set(STARTUP_FILE startup_stm32h747xx.S)
+    set(LINKER_FILE stm32h747xI_CM4.ld)
 endif()
 
 add_library(mbed-stm32h747xi-cm4 INTERFACE)
