@@ -14,7 +14,6 @@ add_library(mbed-storage-sd INTERFACE)
 add_library(mbed-storage-spif INTERFACE)
 
 add_library(mbed-storage-filesystem INTERFACE)
-add_library(mbed-storage-littlefs-v2 INTERFACE)
 add_library(mbed-storage-littlefs INTERFACE)
 add_library(mbed-storage-fat INTERFACE)
 

@@ -15,7 +15,7 @@
  ******************************************************************************
 */
 
-#include "../cmsis_nvic.h"
+#include "cmsis_nvic.h"
 
 
 #if !defined(MBED_APP_START)

@@ -11,7 +11,6 @@ endif()
 
 add_subdirectory(fat)
 add_subdirectory(littlefs)
-add_subdirectory(littlefsv2)
 
 target_include_directories(mbed-storage-filesystem
     INTERFACE
