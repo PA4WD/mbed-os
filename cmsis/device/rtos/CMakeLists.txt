@@ -7,11 +7,6 @@ if(${CMAKE_CROSSCOMPILING})
             INTERFACE
                 TOOLCHAIN_GCC_ARM/mbed_boot_gcc_arm.c
         )
-    elseif(${MBED_TOOLCHAIN} STREQUAL "ARM")
-        target_sources(mbed-rtos
-            INTERFACE
-                TOOLCHAIN_ARM_STD/mbed_boot_arm_std.c
-        )
     endif()
 endif()
 
