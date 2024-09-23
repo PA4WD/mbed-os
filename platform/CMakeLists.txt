@@ -9,9 +9,6 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
     endif()
 endif()
 
-# List of all optional platform libraries available.
-add_library(mbed-psa INTERFACE)
-
 
 add_subdirectory(cxxsupport)
 add_subdirectory(mbed-trace)
