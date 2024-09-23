@@ -7,5 +7,4 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
     endif()
 endif()
 
-add_subdirectory(mbed-coap)
 add_subdirectory(ppp)
