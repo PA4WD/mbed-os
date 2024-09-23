@@ -70,30 +70,6 @@
         },
         "STM": {
             "idle-thread-stack-size-debug-extra": 128
-        },
-        "STM32L1": {
-            "idle-thread-stack-size-debug-extra": 512
-        },
-        "STM32F070RB": {
-            "main-thread-stack-size": 3072
-        },
-        "STM32F072RB": {
-            "main-thread-stack-size": 3072
-        },
-        "TMPM46B": {
-            "main-thread-stack-size": 3072
-        },
-        "NUVOTON": {
-            "idle-thread-stack-size-debug-extra": 512
-        },
-        "MCU_PSOC6_M4": {
-            "target.macros_add": ["CY_RTOS_AWARE"]
-        },
-        "ARM_MUSCA_B1": {
-            "mutex-num": 4
-        },
-        "ARM_MUSCA_S1": {
-            "mutex-num": 4
         }
     }
 }

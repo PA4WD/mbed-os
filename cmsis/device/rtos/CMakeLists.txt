@@ -1,15 +1,6 @@
 # Copyright (c) 2020-2021 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-if(${CMAKE_CROSSCOMPILING})
-    if(${MBED_TOOLCHAIN} STREQUAL "GCC_ARM")
-        target_sources(mbed-rtos
-            INTERFACE
-                TOOLCHAIN_GCC_ARM/mbed_boot_gcc_arm.c
-        )
-    endif()
-endif()
-
 target_include_directories(mbed-rtos
     INTERFACE
         include
@@ -21,6 +12,7 @@ target_sources(mbed-rtos
         source/mbed_rtos_rtx.c
         source/mbed_rtx_handlers.c
         source/mbed_rtx_idle.cpp
+		source/mbed_boot_gcc_arm.c
 )
 
 target_compile_definitions(mbed-rtos
