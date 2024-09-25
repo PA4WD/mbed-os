@@ -19,16 +19,11 @@ target_sources(mbed-usb
         source/OperationListBase.cpp
         source/PolledQueue.cpp
         source/TaskBase.cpp
-        source/USBAudio.cpp
         source/USBCDC.cpp
         source/USBCDC_ECM.cpp
         source/USBDevice.cpp
         source/USBHID.cpp
-        source/USBKeyboard.cpp
-        source/USBMIDI.cpp
         source/USBMSD.cpp
-        source/USBMouse.cpp
-        source/USBMouseKeyboard.cpp
         source/USBSerial.cpp
 )
 
