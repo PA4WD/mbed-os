@@ -95,68 +95,6 @@
             }
         }
     },
-    "PSA_Target": {
-        "inherits": [
-            "Target"
-        ],
-        "features": [
-            "PSA"
-        ],
-        "public": false,
-        "config": {}
-    },
-    "PSA_V7_M": {
-        "inherits": [
-            "PSA_Target"
-        ],
-        "extra_labels": [
-            "MBED_PSA_SRV"
-        ],
-        "device_has": [
-            "TRNG"
-        ],
-        "public": false
-    },
-    "PSA_DUAL_CORE": {
-        "inherits": [
-            "PSA_Target"
-        ],
-        "extra_labels": [
-            "TFM",
-            "TFM_DUALCPU"
-        ],
-        "device_has": [
-            "TRNG"
-        ],
-        "macros_add": [
-            "TFM_MULTI_CORE_MULTI_CLIENT_CALL=1"
-        ],
-        "tfm_target_name": "",
-        "tfm_bootloader_supported": "",
-        "tfm_default_toolchain": "ARMCLANG",
-        "tfm_supported_toolchains": null,
-        "tfm_delivery_dir": "",
-        "public": false
-    },
-    "PSA_V8_M": {
-        "inherits": [
-            "PSA_Target"
-        ],
-        "extra_labels": [
-            "TFM",
-            "TFM_LATEST",
-            "TFM_V8M"
-        ],
-        "device_has": [
-            "TRNG"
-        ],
-        "tfm_target_name": "",
-        "tfm_bootloader_supported": "",
-        "tfm_default_toolchain": "ARMCLANG",
-        "tfm_supported_toolchains": null,
-        "tfm_delivery_dir": "",
-        "public": false
-    },
     "CM4_UARM": {
         "inherits": [
             "Target"
