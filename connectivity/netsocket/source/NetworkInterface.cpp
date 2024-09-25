@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-#include "ns_list.h"
+//#include "ns_list.h"
+#include "iphelpers/include/ns_list.h"
 #include "netsocket/NetworkInterface.h"
 #include "netsocket/NetworkStack.h"
 #include "platform/Callback.h"

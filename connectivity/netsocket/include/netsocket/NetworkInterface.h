@@ -67,9 +67,6 @@ public:
      * as is the number of possible providers. Core providers are:
      *
      * * ETHERNET: EthernetInterface, using default EMAC and OnboardNetworkStack
-     * * MESH: ThreadInterface or LoWPANNDInterface, using default NanostackRfPhy
-     * * CELLULAR: OnboardModemInterface
-     * * WIFI: None - always provided by a specific class
      *
      * Specific drivers may be activated by other settings of the
      * default-network-interface-type configuration.  This will depend on the
