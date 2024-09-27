@@ -22,7 +22,7 @@
 #include "rtos/ThisThread.h"
 
 #ifndef MBED_CONF_MBED_TRACE_ENABLE
-#define MBED_CONF_MBED_TRACE_ENABLE        0
+#define MBED_CONF_MBED_TRACE_ENABLE        1
 #endif
 
 #include "mbed-trace/mbed_trace.h"
@@ -119,7 +119,7 @@ using namespace mbed;
 static PinName *generate_initialized_active_qspif_csel_arr();
 // Static Members for different devices csel
 // _devices_mutex is used to lock csel list - only one QSPIFBlockDevice instance per csel is allowed
-SingletonPtr<PlatformMutex> QSPIFBlockDevice::_devices_mutex;
+SingletonPtr<rtos::Mutex> QSPIFBlockDevice::_devices_mutex;
 int QSPIFBlockDevice::_number_of_active_qspif_flash_csel = 0;
 PinName *QSPIFBlockDevice::_active_qspif_flash_csel_arr = generate_initialized_active_qspif_csel_arr();
 
@@ -1010,8 +1010,7 @@ int QSPIFBlockDevice::_sfdp_detect_and_enable_4byte_addressing(uint8_t *basic_pa
 
         if (_address_size == QSPI_CFG_ADDR_SIZE_32) {
             // Update 1-1-1 format to match new address size
-            if (QSPI_STATUS_OK != _qspi.configure_format(QSPI_CFG_BUS_SINGLE, QSPI_CFG_BUS_SINGLE, _address_size, QSPI_CFG_BUS_SINGLE,
-                                                         0, QSPI_CFG_BUS_SINGLE, 0)) {
+            if (QSPI_STATUS_OK != _qspi.configure_format(QSPI_CFG_BUS_SINGLE, QSPI_CFG_BUS_SINGLE, _address_size, QSPI_CFG_BUS_SINGLE, 0, QSPI_CFG_BUS_SINGLE, 0)) {
                 tr_error("_qspi_configure_format failed");
                 status = QSPIF_BD_ERROR_DEVICE_ERROR;
             }
@@ -1238,8 +1237,7 @@ int QSPIFBlockDevice::_enable_fast_mode()
     const int QER_REG_VALUE = 0x2;
 
     // Configure  BUS Mode to 1_1_1 for all commands other than Read
-    if (QSPI_STATUS_OK != _qspi.configure_format(QSPI_CFG_BUS_SINGLE, QSPI_CFG_BUS_SINGLE, QSPI_CFG_ADDR_SIZE_24, QSPI_CFG_BUS_SINGLE,
-                                                 0, QSPI_CFG_BUS_SINGLE, 0)) {
+    if (QSPI_STATUS_OK != _qspi.configure_format(QSPI_CFG_BUS_SINGLE, QSPI_CFG_BUS_SINGLE, QSPI_CFG_ADDR_SIZE_24, QSPI_CFG_BUS_SINGLE, 0, QSPI_CFG_BUS_SINGLE, 0)) {
         tr_error("_qspi_configure_format failed");
         return -1;
 
@@ -1381,8 +1379,7 @@ qspi_status_t QSPIFBlockDevice::_qspi_send_read_command(qspi_inst_t read_inst, v
     return QSPI_STATUS_OK;
 }
 
-qspi_status_t QSPIFBlockDevice::_qspi_send_program_command(qspi_inst_t prog_inst, const void *buffer,
-                                                           bd_addr_t addr, bd_size_t *size)
+qspi_status_t QSPIFBlockDevice::_qspi_send_program_command(qspi_inst_t prog_inst, const void *buffer, bd_addr_t addr, bd_size_t *size)
 {
     tr_debug("Inst: 0x%xh, addr: %llu, size: %llu", prog_inst, addr, *size);
 

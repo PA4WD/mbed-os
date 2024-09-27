@@ -21,8 +21,8 @@ typedef int FILEHANDLE;
 
 #include "platform/platform.h"
 #include "platform/SingletonPtr.h"
-#include "platform/PlatformMutex.h"
 #include "platform/NonCopyable.h"
+#include "rtos/Mutex.h"
 
 namespace mbed {
 
@@ -62,7 +62,7 @@ public:
 private:
     static FileBase *_head;
     static FileBase *_default;
-    static SingletonPtr<PlatformMutex> _mutex;
+    static SingletonPtr<rtos::Mutex> _mutex;
 
     FileBase   *_next;
     const char *const _name;

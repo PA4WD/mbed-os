@@ -23,22 +23,7 @@
 
 namespace mbed {
 
-SingletonPtr<PlatformMutex> QSPI::_mutex;
-
-uint8_t convert_bus_width_to_line_count(qspi_bus_width_t width)
-{
-    switch (width) {
-        case QSPI_CFG_BUS_SINGLE:
-            return 1;
-        case QSPI_CFG_BUS_DUAL:
-            return 2;
-        case QSPI_CFG_BUS_QUAD:
-            return 4;
-        default:
-            // Unrecognized bus width
-            return 0;
-    }
-}
+SingletonPtr<rtos::Mutex> QSPI::_mutex;
 
 QSPI::QSPI(PinName io0, PinName io1, PinName io2, PinName io3, PinName sclk, PinName ssel, int mode) : _qspi()
 {
@@ -102,10 +87,23 @@ QSPI::~QSPI()
 qspi_status_t QSPI::configure_format(qspi_bus_width_t inst_width, qspi_bus_width_t address_width, qspi_address_size_t address_size, qspi_bus_width_t alt_width, qspi_alt_size_t alt_size, qspi_bus_width_t data_width, int dummy_cycles)
 {
     // Check that alt_size/alt_width are a valid combination
-    uint8_t alt_lines = convert_bus_width_to_line_count(alt_width);
-    if (alt_lines == 0) {
-        return QSPI_STATUS_ERROR;
-    } else if (alt_size % alt_lines != 0) {
+    uint8_t alt_lines = 0;
+    switch (alt_width) {
+        case QSPI_CFG_BUS_SINGLE:
+            alt_lines = 1;
+            break;
+        case QSPI_CFG_BUS_DUAL:
+            alt_lines = 2;
+            break;
+        case QSPI_CFG_BUS_QUAD:
+            alt_lines = 4;
+            break;
+        default:
+            // Unrecognized bus width
+            return QSPI_STATUS_ERROR;
+    } 
+
+    if (alt_size % alt_lines != 0) {
         // Invalid alt size/width combination (alt size is not a multiple of the number of bus lines used to transmit it)
         return QSPI_STATUS_ERROR;
     }
