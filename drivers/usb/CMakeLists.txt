@@ -22,7 +22,6 @@ target_sources(mbed-usb
         source/USBCDC.cpp
         source/USBCDC_ECM.cpp
         source/USBDevice.cpp
-        source/USBHID.cpp
         source/USBMSD.cpp
         source/USBSerial.cpp
 )
