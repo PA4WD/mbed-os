@@ -477,11 +477,11 @@ __STATIC_INLINE uint8_t atomic_wr8 (uint8_t *mem, uint8_t val) {
 #ifdef  __ICCARM__
 #pragma diag_suppress=Pe550
 #endif
-  register uint32_t res;
+  uint32_t res;
 #ifdef  __ICCARM__
 #pragma diag_default=Pe550
 #endif
-  register uint8_t  ret;
+  uint8_t  ret;
 
   __ASM volatile (
 #ifndef __ICCARM__
@@ -525,11 +525,11 @@ __STATIC_INLINE uint32_t atomic_set32 (uint32_t *mem, uint32_t bits) {
 #ifdef  __ICCARM__
 #pragma diag_suppress=Pe550
 #endif
-  register uint32_t val, res;
+  uint32_t val, res;
 #ifdef  __ICCARM__
 #pragma diag_default=Pe550
 #endif
-  register uint32_t ret;
+  uint32_t ret;
 
   __ASM volatile (
 #ifndef __ICCARM__
@@ -585,11 +585,11 @@ __STATIC_INLINE uint32_t atomic_clr32 (uint32_t *mem, uint32_t bits) {
 #ifdef  __ICCARM__
 #pragma diag_suppress=Pe550
 #endif
-  register uint32_t val, res;
+  uint32_t val, res;
 #ifdef  __ICCARM__
 #pragma diag_default=Pe550
 #endif
-  register uint32_t ret;
+  uint32_t ret;
 
   __ASM volatile (
 #ifndef __ICCARM__
@@ -652,11 +652,11 @@ __STATIC_INLINE uint32_t atomic_chk32_all (uint32_t *mem, uint32_t bits) {
 #ifdef  __ICCARM__
 #pragma diag_suppress=Pe550
 #endif
-  register uint32_t val, res;
+  uint32_t val, res;
 #ifdef  __ICCARM__
 #pragma diag_default=Pe550
 #endif
-  register uint32_t ret;
+  uint32_t ret;
 
   __ASM volatile (
 #ifndef __ICCARM__
@@ -726,11 +726,11 @@ __STATIC_INLINE uint32_t atomic_chk32_any (uint32_t *mem, uint32_t bits) {
 #ifdef  __ICCARM__
 #pragma diag_suppress=Pe550
 #endif
-  register uint32_t val, res;
+  uint32_t val, res;
 #ifdef  __ICCARM__
 #pragma diag_default=Pe550
 #endif
-  register uint32_t ret;
+  uint32_t ret;
 
   __ASM volatile (
 #ifndef __ICCARM__
@@ -786,11 +786,11 @@ __STATIC_INLINE uint32_t atomic_inc32 (uint32_t *mem) {
 #ifdef  __ICCARM__
 #pragma diag_suppress=Pe550
 #endif
-  register uint32_t val, res;
+  uint32_t val, res;
 #ifdef  __ICCARM__
 #pragma diag_default=Pe550
 #endif
-  register uint32_t ret;
+  uint32_t ret;
 
   __ASM volatile (
 #ifndef __ICCARM__
@@ -841,11 +841,11 @@ __STATIC_INLINE uint16_t atomic_inc16_lt (uint16_t *mem, uint16_t max) {
 #ifdef  __ICCARM__
 #pragma diag_suppress=Pe550
 #endif
-  register uint32_t val, res;
+  uint32_t val, res;
 #ifdef  __ICCARM__
 #pragma diag_default=Pe550
 #endif
-  register uint16_t ret;
+  uint16_t ret;
 
   __ASM volatile (
 #ifndef __ICCARM__
@@ -901,11 +901,11 @@ __STATIC_INLINE uint16_t atomic_inc16_lim (uint16_t *mem, uint16_t lim) {
 #ifdef  __ICCARM__
 #pragma diag_suppress=Pe550
 #endif
-  register uint32_t val, res;
+  uint32_t val, res;
 #ifdef  __ICCARM__
 #pragma diag_default=Pe550
 #endif
-  register uint16_t ret;
+  uint16_t ret;
 
   __ASM volatile (
 #ifndef __ICCARM__
@@ -954,11 +954,11 @@ __STATIC_INLINE uint32_t atomic_dec32 (uint32_t *mem) {
 #ifdef  __ICCARM__
 #pragma diag_suppress=Pe550
 #endif
-  register uint32_t val, res;
+  uint32_t val, res;
 #ifdef  __ICCARM__
 #pragma diag_default=Pe550
 #endif
-  register uint32_t ret;
+  uint32_t ret;
 
   __ASM volatile (
 #ifndef __ICCARM__
@@ -1006,11 +1006,11 @@ __STATIC_INLINE uint32_t atomic_dec32_nz (uint32_t *mem) {
 #ifdef  __ICCARM__
 #pragma diag_suppress=Pe550
 #endif
-  register uint32_t val, res;
+  uint32_t val, res;
 #ifdef  __ICCARM__
 #pragma diag_default=Pe550
 #endif
-  register uint32_t ret;
+  uint32_t ret;
 
   __ASM volatile (
 #ifndef __ICCARM__
@@ -1062,11 +1062,11 @@ __STATIC_INLINE uint16_t atomic_dec16_nz (uint16_t *mem) {
 #ifdef  __ICCARM__
 #pragma diag_suppress=Pe550
 #endif
-  register uint32_t val, res;
+  uint32_t val, res;
 #ifdef  __ICCARM__
 #pragma diag_default=Pe550
 #endif
-  register uint16_t ret;
+  uint16_t ret;
 
   __ASM volatile (
 #ifndef __ICCARM__
@@ -1118,11 +1118,11 @@ __STATIC_INLINE void *atomic_link_get (void **root) {
 #ifdef  __ICCARM__
 #pragma diag_suppress=Pe550
 #endif
-  register uint32_t val, res;
+  uint32_t val, res;
 #ifdef  __ICCARM__
 #pragma diag_default=Pe550
 #endif
-  register void    *ret;
+  void    *ret;
 
   __ASM volatile (
 #ifndef __ICCARM__
@@ -1174,7 +1174,7 @@ __STATIC_INLINE void atomic_link_put (void **root, void *link) {
 #ifdef  __ICCARM__
 #pragma diag_suppress=Pe550
 #endif
-  register uint32_t val1, val2, res;
+  uint32_t val1, val2, res;
 #ifdef  __ICCARM__
 #pragma diag_default=Pe550
 #endif
