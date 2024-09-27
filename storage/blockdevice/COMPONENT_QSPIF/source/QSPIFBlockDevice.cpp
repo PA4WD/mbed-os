@@ -125,9 +125,7 @@ PinName *QSPIFBlockDevice::_active_qspif_flash_csel_arr = generate_initialized_a
 
 /********* Public API Functions *********/
 /****************************************/
-QSPIFBlockDevice::QSPIFBlockDevice(PinName io0, PinName io1, PinName io2, PinName io3, PinName sclk, PinName csel,
-                                   int clock_mode,
-                                   int freq)
+QSPIFBlockDevice::QSPIFBlockDevice(PinName io0, PinName io1, PinName io2, PinName io3, PinName sclk, PinName csel, int clock_mode, int freq)
     :
     _qspi(io0, io1, io2, io3, sclk, csel, clock_mode), _csel(csel), _freq(freq),
     _init_ref_count(0),
@@ -179,6 +177,8 @@ QSPIFBlockDevice::QSPIFBlockDevice(PinName io0, PinName io1, PinName io2, PinNam
 
     // Quirk for Cypress S25FS512S
     _S25FS512S_quirk = false;
+    // Quirk for AT25SF128A
+    _AT25SF128A_quirk = false;
 }
 
 int QSPIFBlockDevice::init()
@@ -198,8 +198,7 @@ int QSPIFBlockDevice::init()
     _mutex.lock();
 
     // All commands other than Read and RSFDP use default 1-1-1 bus mode (Program/Erase are constrained by flash memory performance more than bus performance)
-    if (QSPI_STATUS_OK != _qspi.configure_format(QSPI_CFG_BUS_SINGLE, QSPI_CFG_BUS_SINGLE, _address_size, QSPI_CFG_BUS_SINGLE,
-                                                 0, QSPI_CFG_BUS_SINGLE, 0)) {
+    if (QSPI_STATUS_OK != _qspi.configure_format(QSPI_CFG_BUS_SINGLE, QSPI_CFG_BUS_SINGLE, _address_size, QSPI_CFG_BUS_SINGLE, 0, QSPI_CFG_BUS_SINGLE, 0)) {
         tr_error("_qspi_configure_format failed");
         status = QSPIF_BD_ERROR_DEVICE_ERROR;
         goto exit_point;
@@ -636,14 +635,54 @@ int QSPIFBlockDevice::_sfdp_parse_basic_param_table(Callback<int(bd_addr_t, mbed
 {
     uint8_t param_table[SFDP_BASIC_PARAMS_TBL_SIZE]; /* Up To 20 DWORDS = 80 Bytes */
 
-    int status = sfdp_reader(
-                     sfdp_info.bptbl.addr,
-                     SFDP_READ_CMD_ADDR_TYPE,
-                     SFDP_READ_CMD_INST,
-                     SFDP_READ_CMD_DUMMY_CYCLES,
-                     param_table,
-                     sfdp_info.bptbl.size
-                 );
+    // int status = sfdp_reader(
+    //                  sfdp_info.bptbl.addr,
+    //                  SFDP_READ_CMD_ADDR_TYPE,
+    //                  SFDP_READ_CMD_INST,
+    //                  SFDP_READ_CMD_DUMMY_CYCLES,
+    //                  param_table,
+    //                  sfdp_info.bptbl.size
+    //              );
+    int status = -1;
+
+    if (_AT25SF128A_quirk) {
+        /*
+         * Skip registers from address 0x54 to 0x5F.
+         * Reading those registers will corrupt future reads.
+        */
+        status = sfdp_reader(
+                        sfdp_info.bptbl.addr,
+                        SFDP_READ_CMD_ADDR_TYPE,
+                        SFDP_READ_CMD_INST,
+                        SFDP_READ_CMD_DUMMY_CYCLES,
+                        param_table,
+                        0x24 // from 0x30 to 0x53
+                    );
+        if (status != QSPI_STATUS_OK) {
+            tr_error("Init - Read SFDP First Table Failed");
+            return -1;
+        }
+
+        status = sfdp_reader(
+                        0x60,
+                        SFDP_READ_CMD_ADDR_TYPE,
+                        SFDP_READ_CMD_INST,
+                        SFDP_READ_CMD_DUMMY_CYCLES,
+                        &param_table[0x30],
+                        0x0C  // from 0x60 to 0x6B
+                    );
+    } else {
+        status = sfdp_reader(
+                        sfdp_info.bptbl.addr,
+                        SFDP_READ_CMD_ADDR_TYPE,
+                        SFDP_READ_CMD_INST,
+                        SFDP_READ_CMD_DUMMY_CYCLES,
+                        param_table,
+                        sfdp_info.bptbl.size
+                    );
+    }
+
+
     if (status != QSPI_STATUS_OK) {
         tr_error("Init - Read SFDP First Table Failed");
         return -1;
@@ -719,7 +758,15 @@ int QSPIFBlockDevice::_sfdp_set_quad_enabled(uint8_t *basic_param_table_ptr)
     uint8_t status_regs[QSPI_MAX_STATUS_REGISTERS] = {0};
 
     // QUAD Enable procedure is specified by 3 bits
-    uint8_t qer_value = (basic_param_table_ptr[QSPIF_BASIC_PARAM_TABLE_QER_BYTE] & 0x70) >> 4;
+    //uint8_t qer_value = (basic_param_table_ptr[QSPIF_BASIC_PARAM_TABLE_QER_BYTE] & 0x70) >> 4;
+
+    uint8_t qer_value = 0;
+    if (_AT25SF128A_quirk) {
+        qer_value = 1;
+    } else {
+        // QUAD Enable procedure is specified by 3 bits
+        qer_value = (basic_param_table_ptr[QSPIF_BASIC_PARAM_TABLE_QER_BYTE] & 0x70) >> 4;
+    }
 
     switch (qer_value) {
         case 0:
@@ -1031,7 +1078,15 @@ int QSPIFBlockDevice::_sfdp_detect_reset_protocol_and_reset(uint8_t *basic_param
     int status = QSPIF_BD_ERROR_OK;
 
 #if RESET_SEQUENCE_FROM_SFDP
-    uint8_t examined_byte = basic_param_table_ptr[QSPIF_BASIC_PARAM_TABLE_SOFT_RESET_BYTE];
+    //uint8_t examined_byte = basic_param_table_ptr[QSPIF_BASIC_PARAM_TABLE_SOFT_RESET_BYTE];
+    uint8_t examined_byte = 0;
+    if (_AT25SF128A_quirk) {
+        // Table ptr is at offset 0x30
+        // in AT25SF128A SW Reset byte is at address 0x64
+        examined_byte = basic_param_table_ptr[0x34];
+    } else {
+        examined_byte = basic_param_table_ptr[QSPIF_BASIC_PARAM_TABLE_SOFT_RESET_BYTE];
+    }
 
     // Ignore bit indicating need to exit 0-4-4 mode - should not enter 0-4-4 mode from QSPIFBlockDevice
     if (examined_byte & SOFT_RESET_RESET_INST_BITMASK) {
@@ -1039,8 +1094,15 @@ int QSPIFBlockDevice::_sfdp_detect_reset_protocol_and_reset(uint8_t *basic_param
 
 #if !MBED_CONF_QSPIF_ENABLE_AND_RESET     // i.e. direct reset, or determined from SFDP
         // Issue instruction 0xF0 to reset the device
-        qspi_status_t qspi_status = _qspi_send_general_command(0xF0, QSPI_NO_ADDRESS_COMMAND, // Send reset instruction
-                                                               NULL, 0, NULL, 0);
+        //qspi_status_t qspi_status = _qspi_send_general_command(0xF0, QSPI_NO_ADDRESS_COMMAND, // Send reset instruction
+//                                                               NULL, 0, NULL, 0);
+        // Issue instruction to reset the device
+        uint8_t reset_cmd = 0xF0;
+        if (_AT25SF128A_quirk) {
+            reset_cmd = 0x99;
+        }
+        qspi_status_t qspi_status = _qspi_send_general_command(reset_cmd, QSPI_NO_ADDRESS_COMMAND, // Send reset instruction
+                                                                NULL, 0, NULL, 0);
         status = (qspi_status == QSPI_STATUS_OK) ? QSPIF_BD_ERROR_OK : QSPIF_BD_ERROR_PARSING_FAILED;
 #endif
 
@@ -1132,6 +1194,12 @@ int QSPIFBlockDevice::_handle_vendor_quirks()
                 _S25FS512S_quirk = true;
             }
             break;
+        case 0x1f:
+            // Adesto device
+            tr_debug("Applying quirks for Adesto AT25SF128A");
+            _write_status_reg_2_inst = 0x31;
+            _AT25SF128A_quirk = true;
+            break;
     }
 
     return 0;
@@ -1196,6 +1264,11 @@ int QSPIFBlockDevice::_set_write_enable()
     // Check Status Register Busy Bit to Verify the Device isn't Busy
     uint8_t status_value = 0;
     int status = -1;
+
+    if (_AT25SF128A_quirk && (false == _is_mem_ready())) {
+        tr_error("Device not ready, set_write_enable failed");
+        return -1;
+    }
 
     do {
         if (QSPI_STATUS_OK !=  _qspi_send_general_command(QSPIF_INST_WREN, QSPI_NO_ADDRESS_COMMAND, NULL, 0, NULL, 0)) {
@@ -1598,7 +1671,8 @@ qspi_status_t QSPIFBlockDevice::_qspi_write_status_registers(uint8_t *reg_buffer
             return QSPI_STATUS_ERROR;
         }
         status = _qspi_send_general_command(_write_status_reg_2_inst, QSPI_NO_ADDRESS_COMMAND,
-                                            (char *) &reg_buffer[0], 1,
+                                            //(char *) &reg_buffer[0], 1,
+                                            (char *) &reg_buffer[1], 1,
                                             NULL, 0);
         if (QSPI_STATUS_OK == status) {
             tr_debug("Writing Status Register 2 Success: value = 0x%x",
