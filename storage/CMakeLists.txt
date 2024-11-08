@@ -30,7 +30,7 @@ if(${CMAKE_CROSSCOMPILING})
     add_subdirectory(blockdevice EXCLUDE_FROM_ALL)
     add_subdirectory(filesystem EXCLUDE_FROM_ALL)
     add_subdirectory(kvstore EXCLUDE_FROM_ALL)
-    add_subdirectory(platform EXCLUDE_FROM_ALL)
+    # add_subdirectory(platform EXCLUDE_FROM_ALL)
 else()
     # Add these subdirectories for the Unit test
     add_subdirectory(blockdevice)
