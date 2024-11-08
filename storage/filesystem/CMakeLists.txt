@@ -10,7 +10,7 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
 endif()
 
 add_subdirectory(fat)
-add_subdirectory(littlefs)
+# add_subdirectory(littlefs)
 
 target_include_directories(mbed-storage-filesystem
     INTERFACE
