@@ -30,9 +30,9 @@
 
 // BlockDevice classes
 #include "blockdevice/BlockDevice.h"
-#include "blockdevice/ChainingBlockDevice.h"
+//#include "blockdevice/ChainingBlockDevice.h"
 #include "blockdevice/SlicingBlockDevice.h"
-#include "blockdevice/HeapBlockDevice.h"
+//#include "blockdevice/HeapBlockDevice.h"
 
 /** @}*/
 #endif

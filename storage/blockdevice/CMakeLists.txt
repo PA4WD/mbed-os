@@ -24,15 +24,15 @@ target_include_directories(mbed-storage-blockdevice
 
 target_sources(mbed-storage-blockdevice
     INTERFACE
-        source/BufferedBlockDevice.cpp
-        source/ChainingBlockDevice.cpp
-        source/ExhaustibleBlockDevice.cpp
-        source/FlashSimBlockDevice.cpp
-        source/HeapBlockDevice.cpp
-        source/MBRBlockDevice.cpp
-        source/ObservingBlockDevice.cpp
-        source/ProfilingBlockDevice.cpp
-        source/ReadOnlyBlockDevice.cpp
+        # source/BufferedBlockDevice.cpp
+        # source/ChainingBlockDevice.cpp
+        # source/ExhaustibleBlockDevice.cpp
+        # source/FlashSimBlockDevice.cpp
+        # source/HeapBlockDevice.cpp
+        # source/MBRBlockDevice.cpp
+        # source/ObservingBlockDevice.cpp
+        # source/ProfilingBlockDevice.cpp
+        # source/ReadOnlyBlockDevice.cpp
         source/SFDP.cpp
         source/SlicingBlockDevice.cpp
 )
