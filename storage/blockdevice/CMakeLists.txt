@@ -10,34 +10,9 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
     endif()
 endif()
 
-if("DATAFLASH" IN_LIST MBED_TARGET_LABELS)
-    add_subdirectory(COMPONENT_DATAFLASH)
-endif()
-
-if("FLASHIAP" IN_LIST MBED_TARGET_LABELS)
-    add_subdirectory(COMPONENT_FLASHIAP)
-endif()
-
-if("I2CEE" IN_LIST MBED_TARGET_LABELS)
-    add_subdirectory(COMPONENT_I2CEE)
-endif()
-
 if("QSPIF" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(COMPONENT_QSPIF)
 endif()
-
-if("OSPIF" IN_LIST MBED_TARGET_LABELS)
-    add_subdirectory(COMPONENT_OSPIF)
-endif()
-
-if("SD" IN_LIST MBED_TARGET_LABELS)
-    add_subdirectory(COMPONENT_SD)
-endif()
-
-if("SPIF" IN_LIST MBED_TARGET_LABELS)
-    add_subdirectory(COMPONENT_SPIF)
-endif()
-
 
 target_include_directories(mbed-storage-blockdevice
     INTERFACE

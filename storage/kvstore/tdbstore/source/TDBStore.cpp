@@ -404,8 +404,7 @@ end:
     return ret;
 }
 
-int TDBStore::find_record(uint8_t area, const char *key, uint32_t &offset,
-                          uint32_t &ram_table_ind, uint32_t &hash)
+int TDBStore::find_record(uint8_t area, const char *key, uint32_t &offset, uint32_t &ram_table_ind, uint32_t &hash)
 {
     ram_table_entry_t *ram_table = (ram_table_entry_t *) _ram_table;
     ram_table_entry_t *entry;
@@ -443,8 +442,7 @@ uint32_t TDBStore::record_size(const char *key, uint32_t data_size)
 }
 
 
-int TDBStore::set_start(set_handle_t *handle, const char *key, size_t final_data_size,
-                        uint32_t create_flags)
+int TDBStore::set_start(set_handle_t *handle, const char *key, size_t final_data_size, uint32_t create_flags)
 {
     int ret;
     uint32_t offset = 0;
@@ -1466,8 +1464,7 @@ int TDBStore::reserved_data_get(void *reserved_data, size_t reserved_data_buf_si
     return ret;
 }
 
-void TDBStore::offset_in_erase_unit(uint8_t area, uint32_t offset,
-                                    uint32_t &offset_from_start, uint32_t &dist_to_end)
+void TDBStore::offset_in_erase_unit(uint8_t area, uint32_t offset, uint32_t &offset_from_start, uint32_t &dist_to_end)
 {
     uint32_t bd_offset = _area_params[area].address + offset;
 

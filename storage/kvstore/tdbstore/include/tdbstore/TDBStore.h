@@ -117,8 +117,7 @@ public:
      *          MBED_ERROR_INVALID_DATA_DETECTED    Data is corrupt.
      *          MBED_ERROR_ITEM_NOT_FOUND           No such key.
      */
-    virtual int get(const char *key, void *buffer, size_t buffer_size, size_t *actual_size = NULL,
-                    size_t offset = 0);
+    virtual int get(const char *key, void *buffer, size_t buffer_size, size_t *actual_size = NULL, size_t offset = 0);
 
     /**
      * @brief Get information of a given key. The returned info contains size and flags
