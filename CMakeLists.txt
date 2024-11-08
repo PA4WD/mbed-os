@@ -157,7 +157,7 @@ target_include_directories(mbed-core
 # are spread in different directories can be referenced and can be linked against
 # by libraries that depend on them.
 # TODO CMake: Should the source files be moved?
-add_library(mbed-device_key INTERFACE)
+# add_library(mbed-device_key INTERFACE)
 add_library(mbed-rtos INTERFACE)
 
 # Include targets/ first, because any post-build hook needs to be defined
@@ -175,7 +175,7 @@ add_subdirectory(events)
 add_subdirectory(connectivity)
 
 # The directories below contain optional target libraries
-add_subdirectory(drivers/device_key EXCLUDE_FROM_ALL)
+# add_subdirectory(drivers/device_key EXCLUDE_FROM_ALL)
 add_subdirectory(drivers/usb EXCLUDE_FROM_ALL)
 add_subdirectory(features EXCLUDE_FROM_ALL)
 add_subdirectory(cmsis/CMSIS_5/CMSIS/RTOS2 EXCLUDE_FROM_ALL)

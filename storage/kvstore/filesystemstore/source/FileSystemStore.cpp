@@ -17,7 +17,7 @@
  */
 
 #include "filesystemstore/FileSystemStore.h"
-#include "kv_config/kv_config.h"
+//#include "kv_config/kv_config.h"
 #include "filesystem/Dir.h"
 #include "filesystem/File.h"
 #include "blockdevice/BlockDevice.h"
@@ -75,14 +75,14 @@ int FileSystemStore::init()
     int status = MBED_SUCCESS;
 
     _mutex.lock();
-    const char *temp_path = get_filesystemstore_folder_path();
-    if (temp_path == NULL) {
+    //const char *temp_path = get_filesystemstore_folder_path();
+    //if (temp_path == NULL) {
         _cfg_fs_path_size = strlen(FSST_DEFAULT_FOLDER_PATH);
         _cfg_fs_path = string_ndup(FSST_DEFAULT_FOLDER_PATH, _cfg_fs_path_size);
-    } else {
-        _cfg_fs_path_size = strlen(temp_path);
-        _cfg_fs_path = string_ndup(temp_path, _cfg_fs_path_size);
-    }
+    // } else {
+    //     _cfg_fs_path_size = strlen(temp_path);
+    //     _cfg_fs_path = string_ndup(temp_path, _cfg_fs_path_size);
+    // }
 
     _full_path_key = new char[_cfg_fs_path_size + KVStore::MAX_KEY_SIZE + 1];
     memset(_full_path_key, 0, (_cfg_fs_path_size + KVStore::MAX_KEY_SIZE + 1));
